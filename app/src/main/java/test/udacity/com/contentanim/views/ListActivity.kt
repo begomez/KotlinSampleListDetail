@@ -1,12 +1,14 @@
-package test.udacity.com.contentanim
+package test.udacity.com.contentanim.views
 
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.v4.app.FragmentTransaction
+import test.udacity.com.contentanim.R
+import test.udacity.com.contentanim.views.ListFragment
 
 
-class MainActivity : AppCompatActivity() {
+class ListActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

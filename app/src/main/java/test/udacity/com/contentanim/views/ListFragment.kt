@@ -1,4 +1,4 @@
-package test.udacity.com.contentanim
+package test.udacity.com.contentanim.views
 
 
 import android.os.Bundle
@@ -6,13 +6,16 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import test.udacity.com.contentanim.views.interfaces.IList
+import test.udacity.com.contentanim.presenters.ListPresenter
+import test.udacity.com.contentanim.R
 import javax.inject.Inject
 
 
 /**
  * Created by bernatgomez on 15/7/17.
  */
-class ListFragment : Fragment(), IList  {
+class ListFragment : Fragment(), IList {
 
     val TAG = ListFragment::class.simpleName
 

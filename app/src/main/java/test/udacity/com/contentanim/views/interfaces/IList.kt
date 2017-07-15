@@ -1,4 +1,4 @@
-package test.udacity.com.contentanim
+package test.udacity.com.contentanim.views.interfaces
 
 
 /**

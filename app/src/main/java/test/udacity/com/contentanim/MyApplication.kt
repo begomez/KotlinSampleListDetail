@@ -1,8 +1,9 @@
 package test.udacity.com.contentanim
 
 import android.app.Application
-import dagger.android.DaggerApplication
-import dagger.android.DaggerApplication_MembersInjector
+import test.udacity.com.contentanim.dependencies.AppComponent
+import test.udacity.com.contentanim.dependencies.AppModule
+import test.udacity.com.contentanim.dependencies.DaggerAppComponent
 
 /**
  * Created by bernatgomez on 15/7/17.
