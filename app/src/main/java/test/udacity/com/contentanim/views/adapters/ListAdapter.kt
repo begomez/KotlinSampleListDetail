@@ -9,7 +9,7 @@ import android.view.ViewGroup
  * Created by bernatgomez on 15/7/17.
  */
 class ListAdapter() : RecyclerView.Adapter<ListAdapter.ListHolder>() {
-    
+
     override fun getItemCount(): Int {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }

@@ -15,7 +15,7 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
 
-        initGraph()
+        this.initGraph()
     }
 
     fun initGraph() {

@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import test.udacity.com.contentanim.MyApplication
 import test.udacity.com.contentanim.views.interfaces.IList
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.R
@@ -34,7 +35,7 @@ class ListFragment : Fragment(), IList {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        injectionWithDagger()
+        this.injectionWithDagger()
     }
 
     override fun onResume() {
@@ -64,6 +65,7 @@ class ListFragment : Fragment(), IList {
     }
 
     private fun injectionWithDagger() {
+        (activity.application as MyApplication).graph?.inject(this)
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
