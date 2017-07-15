@@ -1,0 +1,72 @@
+apply plugin: 'com.android.application'
+
+//XXX: kotlin
+apply plugin: 'kotlin-android'
+
+//XXX: required by dagger
+apply plugin: 'kotlin-kapt'
+
+
+android {
+    compileSdkVersion 26
+    buildToolsVersion "26.0.0"
+    defaultConfig {
+        applicationId "test.udacity.com.contentanim"
+        minSdkVersion 21
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    //XXX: to avoid dagger jsr error
+    configurations.all {
+        resolutionStrategy.force 'com.google.code.findbugs:jsr305:1.3.9'
+    }
+}
+
+ext {
+    android_version = "26.0.+"
+    dagger_version = "2.11"
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+
+    testCompile 'junit:junit:4.12'
+
+    //XXX: support
+    compile "com.android.support.constraint:constraint-layout:1.0.2"
+    compile "com.android.support:appcompat-v7:$android_version"
+    compile "com.android.support:cardview-v7:$android_version"
+    compile "com.android.support:recyclerview-v7:$android_version"
+
+    //XXX: kotlin
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
+    compile "org.jetbrains.kotlin:kotlin-reflect:$kotlin_version"
+
+    //XXX: Retro
+    compile 'com.squareup.retrofit2:retrofit:2.3.0'
+
+    //XXX: Dagger
+    compile "com.google.dagger:dagger:$dagger_version"
+    kapt "com.google.dagger:dagger-compiler:$dagger_version"
+    compile "com.google.dagger:dagger-android:$dagger_version"
+    kapt "com.google.dagger:dagger-android-processor:$dagger_version"
+    provided 'org.glassfish:javax.annotation:10.0-b28'
+
+}
+
+repositories {
+    mavenCentral()
+}
