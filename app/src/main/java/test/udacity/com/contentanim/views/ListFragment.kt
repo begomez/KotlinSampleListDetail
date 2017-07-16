@@ -1,6 +1,7 @@
 package test.udacity.com.contentanim.views
 
 
+import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.view.LayoutInflater
@@ -10,6 +11,9 @@ import test.udacity.com.contentanim.MyApplication
 import test.udacity.com.contentanim.views.interfaces.IList
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.R
+import test.udacity.com.contentanim.dependencies.AppModule
+import test.udacity.com.contentanim.dependencies.DaggerAppComponent
+import test.udacity.com.contentanim.models.ImgModel
 import javax.inject.Inject
 
 
@@ -38,6 +42,29 @@ class ListFragment : Fragment(), IList {
         this.injectionWithDagger()
     }
 
+    override fun onAttach(context: Context?) {
+        super.onAttach(context)
+
+    }
+
+    override fun onDetach() {
+        super.onDetach()
+    }
+
+    override fun onStart() {
+        super.onStart()
+
+        this.presenter.bindView(this)
+
+        this.presenter.start()
+    }
+
+    override fun onStop() {
+        super.onStop()
+
+        this.presenter.stop()
+    }
+
     override fun onResume() {
         super.onResume()
 
@@ -61,18 +88,19 @@ class ListFragment : Fragment(), IList {
 //////////////////////////////////////////////////////////////////////////////////////
 
     private fun fetchData() {
-
+        this.presenter.getData("")
     }
 
     private fun injectionWithDagger() {
-        (activity.application as MyApplication).graph?.inject(this)
+        DaggerAppComponent.builder().appModule(AppModule()).build().inject(this)
+        //(this.activity.application as MyApplication).graph?.inject(this)
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
 // IMPL
 //////////////////////////////////////////////////////////////////////////////////////
 
-    override fun onDataReceived() {
+    override fun onDataReceived(data : ArrayList<ImgModel>) {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

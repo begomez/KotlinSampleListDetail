@@ -10,6 +10,10 @@ import test.udacity.com.contentanim.dependencies.DaggerAppComponent
  */
 class MyApplication : Application() {
 
+    companion object {
+        lateinit var instance : MyApplication
+    }
+
     var graph : AppComponent? = null
 
     override fun onCreate() {
@@ -18,7 +22,16 @@ class MyApplication : Application() {
         this.initGraph()
     }
 
+    fun getInstance() : MyApplication {
+        if (MyApplication.instance == null) {
+            MyApplication.instance = MyApplication()
+        }
+
+        return instance
+    }
+
     fun initGraph() {
         graph = DaggerAppComponent.builder().appModule(AppModule()).build()
     }
+
 }
