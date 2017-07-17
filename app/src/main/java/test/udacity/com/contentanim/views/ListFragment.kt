@@ -1,25 +1,22 @@
 package test.udacity.com.contentanim.views
 
 
-import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.support.v7.widget.LinearLayoutManager
-import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.GridView
-import test.udacity.com.contentanim.views.interfaces.IList
-import test.udacity.com.contentanim.presenters.ListPresenter
+import kotlinx.android.synthetic.main.fragment_list.*
 import test.udacity.com.contentanim.R
 import test.udacity.com.contentanim.dependencies.AppModule
 import test.udacity.com.contentanim.dependencies.DaggerAppComponent
 import test.udacity.com.contentanim.models.PhotoModel
-import javax.inject.Inject
-import kotlinx.android.synthetic.main.fragment_list.*
+import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.views.adapters.ListAdapter
+import test.udacity.com.contentanim.views.interfaces.IList
+import javax.inject.Inject
+
 
 /**
  * Created by bernatgomez on 15/7/17.
@@ -28,8 +25,9 @@ class ListFragment : Fragment(), IList {
 
     val TAG = ListFragment::class.simpleName
 
+
     @Inject
-    lateinit var presenter : ListPresenter
+    protected lateinit var presenter : ListPresenter
 
     companion object {
         fun newInstance(): ListFragment {
@@ -44,15 +42,6 @@ class ListFragment : Fragment(), IList {
         super.onCreate(savedInstanceState)
 
         this.injectionWithDagger()
-    }
-
-    override fun onAttach(context: Context?) {
-        super.onAttach(context)
-
-    }
-
-    override fun onDetach() {
-        super.onDetach()
     }
 
     override fun onStart() {
@@ -79,12 +68,10 @@ class ListFragment : Fragment(), IList {
         super.onPause()
     }
 
-    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val v = inflater?.inflate(R.layout.fragment_list, container, false)
-
-        return v
+        return inflater?.inflate(R.layout.fragment_list, container, false)
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -92,7 +79,7 @@ class ListFragment : Fragment(), IList {
 //////////////////////////////////////////////////////////////////////////////////////
 
     private fun fetchData() {
-        this.presenter.getData("")
+        this.presenter.getData()
     }
 
     private fun injectionWithDagger() {
@@ -104,10 +91,14 @@ class ListFragment : Fragment(), IList {
 //////////////////////////////////////////////////////////////////////////////////////
 
     override fun onDataReceived(data : List<PhotoModel>) {
-        list.layoutManager = GridLayoutManager(context, 2)
-        list.adapter = ListAdapter(this.context, data)
-        list.adapter.notifyDataSetChanged()
-        list.setHasFixedSize(true)
+        this.configureListAndAdapter(data)
+    }
+
+    fun configureListAndAdapter(data : List<PhotoModel>) {
+        this.list.layoutManager = GridLayoutManager(this.context, 2)
+        this.list.adapter = ListAdapter(this.context, data)
+        this.list.adapter.notifyDataSetChanged()
+        this.list.setHasFixedSize(true)
     }
 
 }

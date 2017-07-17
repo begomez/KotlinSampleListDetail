@@ -3,6 +3,7 @@ apply plugin: 'com.android.application'
 //XXX: kotlin
 apply plugin: 'kotlin-android'
 
+//XXX: kotlin exten
 apply plugin: 'kotlin-android-extensions'
 
 //XXX: dagger annotation processing
@@ -39,6 +40,9 @@ ext {
     android_version = "26.0.+"
     dagger_version = "2.11"
     retrofit_version = "2.3.0"
+    gson_version = "2.1.0"
+    eventbus_version = "3.0.0"
+    picasso_version = "2.5.2"
 }
 
 dependencies {
@@ -73,16 +77,16 @@ dependencies {
     kapt "com.google.dagger:dagger-android-processor:$dagger_version"
 
     // GSON
-    compile 'com.squareup.retrofit2:converter-gson:2.1.0'
+    compile "com.squareup.retrofit2:converter-gson:$gson_version"
 
     // EVENT
-    compile 'org.greenrobot:eventbus:3.0.0'
+    compile "org.greenrobot:eventbus:$eventbus_version"
 
     // PICASSO
-    compile 'com.squareup.picasso:picasso:2.5.2'
+    compile "com.squareup.picasso:picasso:$picasso_version"
 
 
-    provided 'org.glassfish:javax.annotation:10.0-b28'
+    provided "org.glassfish:javax.annotation:10.0-b28"
 }
 
 repositories {

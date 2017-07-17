@@ -1,11 +1,13 @@
 package test.udacity.com.contentanim.dependencies
 
 
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import test.udacity.com.contentanim.Api
 import test.udacity.com.contentanim.controllers.ListController
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.views.ListFragment
+
 
 /**
  * Created by bernatgomez on 15/7/17.
@@ -22,4 +24,6 @@ interface AppComponent {
     fun getRetrofit() : Retrofit
 
     fun getApi() : Api
+
+    fun getBus() : EventBus
 }

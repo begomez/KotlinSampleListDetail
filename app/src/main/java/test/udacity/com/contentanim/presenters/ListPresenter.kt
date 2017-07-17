@@ -1,5 +1,6 @@
 package test.udacity.com.contentanim.presenters
 
+
 import android.util.Log
 import org.greenrobot.eventbus.EventBus
 import org.greenrobot.eventbus.Subscribe
@@ -12,42 +13,45 @@ import test.udacity.com.contentanim.models.PhotoModel
 import test.udacity.com.contentanim.views.interfaces.IList
 import javax.inject.Inject
 
+
 /**
  * Created by bernatgomez on 15/7/17.
  */
-
 class ListPresenter @Inject constructor() {
 
     val TAG = ListPresenter::class.simpleName
 
+    val NUM_ITEMS = 12
+
     @Inject
-    lateinit var controller : ListController
+    protected lateinit var controller : ListController
 
     private lateinit var view : IList
+
 
     init {
         DaggerAppComponent.builder().appModule(AppModule()).build().inject(this)
     }
 
-    fun bindView(view : IList) : Unit {
+    fun bindView(view : IList) {
         this.view = view
     }
 
-    fun start() : Unit {
+    fun start() {
         EventBus.getDefault().register(this)
     }
 
-    fun stop() : Unit {
+    fun stop() {
         EventBus.getDefault().unregister(this)
     }
 
-    fun getData(url :String) {
-        ListController().getPhotos(url)
+    fun getData() {
+        this.controller.getPhotos()
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onDataReceived(data : List<PhotoModel>) : Unit {
-        view.onDataReceived(data.subList(data.size - 12, data.size))
+    fun onDataReceived(data : List<PhotoModel>) {
+        this.view.onDataReceived(data.subList(data.size - NUM_ITEMS, data.size))
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

@@ -1,11 +1,14 @@
 package test.udacity.com.contentanim.dependencies
 
+
 import dagger.Module
 import dagger.Provides
+import org.greenrobot.eventbus.EventBus
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import test.udacity.com.contentanim.Api
-import test.udacity.com.contentanim.presenters.ListPresenter
+import test.udacity.com.contentanim.controllers.ListController
+
 
 /**
  * Created by bernatgomez on 15/7/17.
@@ -14,16 +17,10 @@ import test.udacity.com.contentanim.presenters.ListPresenter
 class AppModule {
 
     @Provides
-    fun provideListPresenter() : ListPresenter {
-        return ListPresenter()
-    }
-
-    @Provides
     fun provideRetrofit() : Retrofit {
-        val URL : String = "https://unsplash.it"
-        var adapter : Retrofit? = null
+        val URL : String = ListController.LIST_URL
 
-        adapter =
+        val adapter =
             Retrofit.Builder()
                 .baseUrl(URL)
                 .addConverterFactory(GsonConverterFactory.create())
@@ -35,6 +32,11 @@ class AppModule {
     @Provides
     fun provideApiService(adapter : Retrofit) : Api {
         return adapter.create(Api::class.java)
+    }
+
+    @Provides
+    fun provideBus() : EventBus {
+        return EventBus.getDefault()
     }
 
 }

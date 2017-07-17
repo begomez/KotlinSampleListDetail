@@ -1,9 +1,11 @@
 package test.udacity.com.contentanim
 
+
 import android.app.Application
 import test.udacity.com.contentanim.dependencies.AppComponent
 import test.udacity.com.contentanim.dependencies.AppModule
 import test.udacity.com.contentanim.dependencies.DaggerAppComponent
+
 
 /**
  * Created by bernatgomez on 15/7/17.
@@ -14,8 +16,12 @@ class MyApplication : Application() {
         lateinit var instance : MyApplication
     }
 
-    var graph : AppComponent? = null
+    protected var graph : AppComponent? = null
 
+
+    /**
+     *
+     */
     override fun onCreate() {
         super.onCreate()
 
