@@ -3,6 +3,8 @@ apply plugin: 'com.android.application'
 //XXX: kotlin
 apply plugin: 'kotlin-android'
 
+apply plugin: 'kotlin-android-extensions'
+
 //XXX: dagger annotation processing
 apply plugin: 'kotlin-kapt'
 
@@ -75,6 +77,9 @@ dependencies {
 
     // EVENT
     compile 'org.greenrobot:eventbus:3.0.0'
+
+    // PICASSO
+    compile 'com.squareup.picasso:picasso:2.5.2'
 
 
     provided 'org.glassfish:javax.annotation:10.0-b28'

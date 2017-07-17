@@ -3,7 +3,7 @@ package test.udacity.com.contentanim.models
 /**
  * Created by bernatgomez on 15/7/17.
  */
-data class ImgModel
+data class PhotoModel
     constructor(
         val format : String,
         val width : Int, val height : Int,

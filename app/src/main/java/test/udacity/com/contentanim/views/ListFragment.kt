@@ -4,18 +4,22 @@ package test.udacity.com.contentanim.views
 import android.content.Context
 import android.os.Bundle
 import android.support.v4.app.Fragment
+import android.support.v7.widget.GridLayoutManager
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import test.udacity.com.contentanim.MyApplication
+import android.widget.GridView
 import test.udacity.com.contentanim.views.interfaces.IList
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.R
 import test.udacity.com.contentanim.dependencies.AppModule
 import test.udacity.com.contentanim.dependencies.DaggerAppComponent
-import test.udacity.com.contentanim.models.ImgModel
+import test.udacity.com.contentanim.models.PhotoModel
 import javax.inject.Inject
-
+import kotlinx.android.synthetic.main.fragment_list.*
+import test.udacity.com.contentanim.views.adapters.ListAdapter
 
 /**
  * Created by bernatgomez on 15/7/17.
@@ -78,7 +82,7 @@ class ListFragment : Fragment(), IList {
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
-        val v : View? = inflater?.inflate(R.layout.fragment_list, container, false)
+        val v = inflater?.inflate(R.layout.fragment_list, container, false)
 
         return v
     }
@@ -93,15 +97,17 @@ class ListFragment : Fragment(), IList {
 
     private fun injectionWithDagger() {
         DaggerAppComponent.builder().appModule(AppModule()).build().inject(this)
-        //(this.activity.application as MyApplication).graph?.inject(this)
     }
 
 //////////////////////////////////////////////////////////////////////////////////////
 // IMPL
 //////////////////////////////////////////////////////////////////////////////////////
 
-    override fun onDataReceived(data : ArrayList<ImgModel>) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    override fun onDataReceived(data : List<PhotoModel>) {
+        list.layoutManager = GridLayoutManager(context, 2)
+        list.adapter = ListAdapter(this.context, data)
+        list.adapter.notifyDataSetChanged()
+        list.setHasFixedSize(true)
     }
 
 }
