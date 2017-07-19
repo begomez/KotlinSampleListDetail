@@ -15,13 +15,16 @@ import javax.inject.Inject
 
 
 /**
+ * List presenter
  * Created by bernatgomez on 15/7/17.
  */
 class ListPresenter @Inject constructor() {
 
     val TAG = ListPresenter::class.simpleName
 
-    val NUM_ITEMS = 12
+
+    @Inject
+    protected lateinit var bus : EventBus
 
     @Inject
     protected lateinit var controller : ListController
@@ -29,33 +32,50 @@ class ListPresenter @Inject constructor() {
     private lateinit var view : IList
 
 
+//////////////////////////////////////////////////////////////////////////////////////
+// CONS
+//////////////////////////////////////////////////////////////////////////////////////
+
     init {
+        injectionWithDagger()
+    }
+
+    private fun injectionWithDagger() {
         DaggerAppComponent.builder().appModule(AppModule()).build().inject(this)
     }
+
+//////////////////////////////////////////////////////////////////////////////////////
+// API
+//////////////////////////////////////////////////////////////////////////////////////
 
     fun bindView(view : IList) {
         this.view = view
     }
 
     fun start() {
-        EventBus.getDefault().register(this)
+        this.bus.register(this)
     }
 
     fun stop() {
-        EventBus.getDefault().unregister(this)
+        this.bus.unregister(this)
     }
 
     fun getData() {
         this.controller.getPhotos()
     }
 
+//////////////////////////////////////////////////////////////////////////////////////
+// SUBS
+//////////////////////////////////////////////////////////////////////////////////////
+
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onDataReceived(data : List<PhotoModel>) {
-        this.view.onDataReceived(data.subList(data.size - NUM_ITEMS, data.size))
+    fun onListSuccess(data : List<PhotoModel>) {
+        this.view.onDataReceived(data)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    fun onErrorReceived(error : ErrorModel) {
+    fun onListError(error : ErrorModel) {
+        //TODO:
         Log.e(TAG, error.msg)
     }
 

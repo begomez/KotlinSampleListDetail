@@ -19,15 +19,18 @@ import javax.inject.Inject
 
 
 /**
+ * Main activity content
  * Created by bernatgomez on 15/7/17.
  */
 class ListFragment : Fragment(), IList {
 
-    val TAG = ListFragment::class.simpleName
-
-
     @Inject
     protected lateinit var presenter : ListPresenter
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CONS
+//////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
         fun newInstance(): ListFragment {
@@ -64,10 +67,6 @@ class ListFragment : Fragment(), IList {
         this.fetchData()
     }
 
-    override fun onPause() {
-        super.onPause()
-    }
-
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?) : View? {
         super.onCreateView(inflater, container, savedInstanceState)
 
@@ -91,13 +90,17 @@ class ListFragment : Fragment(), IList {
 //////////////////////////////////////////////////////////////////////////////////////
 
     override fun onDataReceived(data : List<PhotoModel>) {
-        this.configureListAndAdapter(data)
+        this.createAdapterAndConfigureList(data)
     }
 
-    fun configureListAndAdapter(data : List<PhotoModel>) {
-        this.list.layoutManager = GridLayoutManager(this.context, 2)
-        this.list.adapter = ListAdapter(this.context, data)
-        this.list.adapter.notifyDataSetChanged()
+    fun createAdapterAndConfigureList(data : List<PhotoModel>) {
+        val SPAN = 2
+
+        var adapter = ListAdapter(this.context, data)
+        adapter.notifyDataSetChanged()
+
+        this.list.adapter = adapter
+        this.list.layoutManager = GridLayoutManager(this.context, SPAN)
         this.list.setHasFixedSize(true)
     }
 

@@ -18,15 +18,10 @@ class AppModule {
 
     @Provides
     fun provideRetrofit() : Retrofit {
-        val URL : String = ListController.LIST_URL
-
-        val adapter =
-            Retrofit.Builder()
-                .baseUrl(URL)
+        return Retrofit.Builder()
+                .baseUrl(ListController.LIST_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                     .build()
-
-        return adapter
     }
 
     @Provides

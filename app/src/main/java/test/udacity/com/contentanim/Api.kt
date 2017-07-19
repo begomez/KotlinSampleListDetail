@@ -7,6 +7,7 @@ import test.udacity.com.contentanim.models.PhotoModel
 
 
 /**
+ * Unsplash retrofit api
  * Created by bernatgomez on 16/7/17.
  */
 interface Api {

@@ -13,5 +13,3 @@ data class PhotoModel constructor (
         val author : String,
         val author_url : String,
         val author_post : String)
-{
-}

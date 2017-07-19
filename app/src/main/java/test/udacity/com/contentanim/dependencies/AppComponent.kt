@@ -21,7 +21,7 @@ interface AppComponent {
 
     fun inject(controller : ListController)
 
-    fun getRetrofit() : Retrofit
+    fun getAdapter() : Retrofit
 
     fun getApi() : Api
 

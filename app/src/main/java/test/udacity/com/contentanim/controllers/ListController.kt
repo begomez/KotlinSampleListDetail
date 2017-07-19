@@ -19,12 +19,18 @@ import javax.inject.Inject
 class ListController @Inject constructor() {
 
     @Inject
-    lateinit var api : Api
+    protected lateinit var api : Api
 
     @Inject
-    lateinit var bus : EventBus
+    protected lateinit var bus : EventBus
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// CONS
+//////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
+        val LIST_NUM_ITEMS = 12
         val LIST_URL = "https://unsplash.it/"
         val LIST_ITEM_PATH = "?image="
     }
@@ -33,6 +39,9 @@ class ListController @Inject constructor() {
         DaggerAppComponent.builder().appModule(AppModule()).build().inject(this)
     }
 
+//////////////////////////////////////////////////////////////////////////////////////
+// API
+//////////////////////////////////////////////////////////////////////////////////////
 
     /**
      *
@@ -43,7 +52,9 @@ class ListController @Inject constructor() {
         var callback : Callback<List<PhotoModel>> =
             object : Callback<List<PhotoModel>> {
                 override fun onResponse(call: Call<List<PhotoModel>>?, response: Response<List<PhotoModel>>?) {
-                    bus.post(response?.body())
+                    val length = response!!.body()!!.size
+
+                    bus.post(response!!.body()!!.subList(length - LIST_NUM_ITEMS, length))
                 }
 
                 override fun onFailure(call: Call<List<PhotoModel>>?, t: Throwable?) {

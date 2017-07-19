@@ -14,6 +14,8 @@ import test.udacity.com.contentanim.models.PhotoModel
 
 
 /**
+ * List adapter
+ *
  * Created by bernatgomez on 15/7/17.
  */
 class ListAdapter
@@ -23,7 +25,7 @@ class ListAdapter
      *
      */
     override fun getItemCount(): Int {
-        return this.list.size //To change body of created functions use File | Settings | File Templates.
+        return this.list.size
     }
 
     /**
@@ -43,20 +45,19 @@ class ListAdapter
     }
 
     /**
-     *
+     * List item holder
      */
-    class ListHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ListHolder constructor(itemView: View) : RecyclerView.ViewHolder(itemView) {
 
         /**
          *
          */
         fun bind(photo: PhotoModel) {
-            val urlPhoto =
-                ListController.LIST_URL +
-                this.itemView.context.getResources().getDisplayMetrics().widthPixels +
-                ListController.LIST_ITEM_PATH + photo.id
+            Picasso.with(this.itemView.context).load(this.getUrl(photo)).into(this.itemView.photo)
+        }
 
-            Picasso.with(this.itemView.context).load(urlPhoto).into(this.itemView.photo)
+        fun getUrl(photo : PhotoModel) : String {
+            return ListController.LIST_URL + this.itemView.context.resources.displayMetrics.widthPixels + ListController.LIST_ITEM_PATH + photo.id
         }
     }
 

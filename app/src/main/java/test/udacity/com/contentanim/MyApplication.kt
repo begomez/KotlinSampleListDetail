@@ -10,23 +10,42 @@ import test.udacity.com.contentanim.dependencies.DaggerAppComponent
 /**
  * Created by bernatgomez on 15/7/17.
  */
-class MyApplication : Application() {
+//XXX: private constructor generates access error
+class MyApplication /*private*/ constructor() : Application() {
+
+    lateinit protected var graph : AppComponent
 
     companion object {
         lateinit var instance : MyApplication
     }
 
-    protected var graph : AppComponent? = null
+    init {
+        this.initGraph()
+    }
 
+//////////////////////////////////////////////////////////////////////////////////////
+// LIFE
+//////////////////////////////////////////////////////////////////////////////////////
 
     /**
      *
      */
     override fun onCreate() {
         super.onCreate()
-
-        this.initGraph()
     }
+
+//////////////////////////////////////////////////////////////////////////////////////
+// HELPERS
+//////////////////////////////////////////////////////////////////////////////////////
+
+    fun initGraph() {
+        this.graph = DaggerAppComponent.builder().appModule(AppModule()).build()
+    }
+
+
+//////////////////////////////////////////////////////////////////////////////////////
+// ACCESSORS
+//////////////////////////////////////////////////////////////////////////////////////
 
     fun getInstance() : MyApplication {
         if (MyApplication.instance == null) {
@@ -35,9 +54,4 @@ class MyApplication : Application() {
 
         return instance
     }
-
-    fun initGraph() {
-        graph = DaggerAppComponent.builder().appModule(AppModule()).build()
-    }
-
 }
