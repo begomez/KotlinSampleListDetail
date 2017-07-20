@@ -12,5 +12,15 @@ interface IList {
     /**
      *
      */
+    fun hideLoading();
+
+    /**
+     *
+     */
+    fun showLoading();
+
+    /**
+     *
+     */
     fun onDataReceived(data : List<PhotoModel>)
 }

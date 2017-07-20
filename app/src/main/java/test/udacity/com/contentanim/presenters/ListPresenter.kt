@@ -61,6 +61,8 @@ class ListPresenter @Inject constructor() {
     }
 
     fun getData() {
+        this.view.showLoading()
+
         this.controller.getPhotos()
     }
 
@@ -70,11 +72,15 @@ class ListPresenter @Inject constructor() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onListSuccess(data : List<PhotoModel>) {
+        this.view.hideLoading()
+
         this.view.onDataReceived(data)
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onListError(error : ErrorModel) {
+
+        this.view.hideLoading()
         //TODO:
         Log.e(TAG, error.msg)
     }
