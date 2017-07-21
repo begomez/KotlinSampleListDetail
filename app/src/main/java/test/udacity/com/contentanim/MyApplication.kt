@@ -15,6 +15,8 @@ class MyApplication /*private*/ constructor() : Application() {
 
     lateinit protected var graph : AppComponent
 
+
+    
     companion object {
         lateinit var instance : MyApplication
     }

@@ -38,7 +38,7 @@ class ListActivity : AppCompatActivity() {
      *
      */
     private fun launchContentFragment() {
-        val trans : FragmentTransaction = supportFragmentManager.beginTransaction()
+        val trans : FragmentTransaction = this.supportFragmentManager.beginTransaction()
 
         trans.replace(R.id.mainContainer, ListFragment.newInstance())
 

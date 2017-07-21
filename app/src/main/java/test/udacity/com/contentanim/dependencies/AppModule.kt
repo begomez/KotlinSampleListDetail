@@ -25,7 +25,7 @@ class AppModule {
     }
 
     @Provides
-    fun provideApiService(adapter : Retrofit) : Api {
+    fun provideApi(adapter : Retrofit) : Api {
         return adapter.create(Api::class.java)
     }
 

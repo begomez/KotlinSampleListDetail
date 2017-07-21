@@ -1,15 +1,17 @@
 package test.udacity.com.contentanim.views
 
+
 import android.graphics.Rect
 import android.support.v7.widget.RecyclerView
 import android.view.View
+
 
 /**
  * List decorator
  *
  * Created by bernatgomez on 20/7/17.
  */
-class GridDecorator constructor(val pad : Int) : RecyclerView.ItemDecoration() {
+class GridDecoration constructor(val pad : Int) : RecyclerView.ItemDecoration() {
 
     /**
      *

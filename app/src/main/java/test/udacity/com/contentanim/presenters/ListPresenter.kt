@@ -79,10 +79,8 @@ class ListPresenter @Inject constructor() {
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     fun onListError(error : ErrorModel) {
-
         this.view.hideLoading()
         //TODO:
         Log.e(TAG, error.msg)
     }
-
 }

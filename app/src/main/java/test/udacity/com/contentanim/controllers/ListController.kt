@@ -47,14 +47,14 @@ class ListController @Inject constructor() {
      *
      */
     fun getPhotos() {
-        var request = this.api.getImages()
+        val request = this.api.list()
 
-        var callback : Callback<List<PhotoModel>> =
+        val callback : Callback<List<PhotoModel>> =
             object : Callback<List<PhotoModel>> {
                 override fun onResponse(call: Call<List<PhotoModel>>?, response: Response<List<PhotoModel>>?) {
                     val length = response!!.body()!!.size
 
-                    bus.post(response!!.body()!!.subList(length - LIST_NUM_ITEMS, length))
+                    bus.post(response.body()!!.subList(length - LIST_NUM_ITEMS, length))
                 }
 
                 override fun onFailure(call: Call<List<PhotoModel>>?, t: Throwable?) {

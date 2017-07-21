@@ -43,7 +43,6 @@ class DetailActivity : AppCompatActivity() {
 
             this.titlee.setText(data.author)
             this.content.setText(getString(R.string.fake_descrip))
-
         }
 
     }
@@ -52,7 +51,7 @@ class DetailActivity : AppCompatActivity() {
         val bar : ActionBar? = this.supportActionBar
 
         bar!!.setTitle(R.string.app_name)
-        bar.setDisplayHomeAsUpEnabled(true)
+        bar!!.setDisplayHomeAsUpEnabled(true)
     }
 
     override fun onPrepareOptionsMenu(menu: Menu?): Boolean {

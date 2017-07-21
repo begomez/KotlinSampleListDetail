@@ -13,6 +13,6 @@ import test.udacity.com.contentanim.models.PhotoModel
 interface Api {
 
     @GET("/list")
-    fun getImages() : Call<List<PhotoModel>>
+    fun list() : Call<List<PhotoModel>>
 
 }

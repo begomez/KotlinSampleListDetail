@@ -7,7 +7,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,17 +19,15 @@ import test.udacity.com.contentanim.models.PhotoModel
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.views.adapters.ListAdapter
 import test.udacity.com.contentanim.views.interfaces.IList
-import test.udacity.com.contentanim.views.interfaces.OnItemClick
 import javax.inject.Inject
 
 
 /**
- * Main activity content
+ * Main fragment content
+ *
  * Created by bernatgomez on 15/7/17.
  */
-class ListFragment : Fragment(), IList, OnItemClick {
-
-    val TAG = ListFragment::class.simpleName
+class ListFragment constructor() : Fragment(), IList {
 
     @Inject
     protected lateinit var presenter : ListPresenter
@@ -41,7 +38,7 @@ class ListFragment : Fragment(), IList, OnItemClick {
 //////////////////////////////////////////////////////////////////////////////////////
 
     companion object {
-        fun newInstance(): ListFragment {
+        fun newInstance() : ListFragment {
             return ListFragment()
         }
     }
@@ -115,37 +112,20 @@ class ListFragment : Fragment(), IList, OnItemClick {
         this.list.visibility = View.INVISIBLE
     }
 
-
     fun createAdapterAndConfigureList(data : List<PhotoModel>) {
         this.createAdapter(data)
         this.configureList()
     }
 
     fun createAdapter(data : List<PhotoModel>) {
-        var adapter =
-            ListAdapter(this.context, data) {navigate(it)}
+
+        //XXX: if lambda is the last argument, we can put it out the parenthesis
+        val adapter =
+            ListAdapter(this.context, data) {this.navigate(it)}
 
         adapter.notifyDataSetChanged()
 
         this.list.adapter = adapter
-    }
-
-    fun navigate(photo : PhotoModel) {
-        val i : Intent = Intent(this.activity, DetailActivity::class.java)
-
-        i.setAction(Intent.ACTION_VIEW)
-        i.setData(this.getUrl(photo))
-        i.putExtra(DetailActivity.EXTRA_PHOTO, photo)
-
-        Log.i(TAG, "" + photo.id)
-
-        var b : Bundle = ActivityOptions.makeSceneTransitionAnimation(this.activity).toBundle()
-
-        this.activity.startActivity(i, b)
-    }
-
-    fun getUrl(photo : PhotoModel) : Uri {
-        return Uri.parse(ListController.LIST_URL + this.resources.displayMetrics.widthPixels + ListController.LIST_ITEM_PATH + photo.id)
     }
 
     fun configureList() {
@@ -153,9 +133,11 @@ class ListFragment : Fragment(), IList, OnItemClick {
 
         val mgr : GridLayoutManager = GridLayoutManager(this.context, COLS)
 
+
         mgr.spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
-            override fun getSpanSize(position: Int): Int {
-                var span : Int = 0;
+
+            override fun getSpanSize(position: Int) : Int {
+                var span : Int = 0
 
                 when (position % 6) {
                     0 -> span = 1
@@ -171,14 +153,23 @@ class ListFragment : Fragment(), IList, OnItemClick {
         }
 
         this.list.layoutManager = mgr
-        this.list.addItemDecoration(GridDecorator(this.resources.getInteger(R.integer.item_decor_pad)))
+        this.list.addItemDecoration(GridDecoration(this.resources.getInteger(R.integer.item_decor_pad)))
         this.list.setHasFixedSize(true)
     }
 
-//////////////////////////////////////////////////////////////////////////////////////
-// IMPL
-//////////////////////////////////////////////////////////////////////////////////////
-    override fun onClick(data: PhotoModel) {
+    fun navigate(photo : PhotoModel) {
+        val i : Intent = Intent(this.activity, DetailActivity::class.java)
 
+        i.action = Intent.ACTION_VIEW
+        i.data = this.getUrl(photo)
+        i.putExtra(DetailActivity.EXTRA_PHOTO, photo)
+
+        val b : Bundle = ActivityOptions.makeSceneTransitionAnimation(this.activity).toBundle()
+
+        this.activity.startActivity(i, b)
+    }
+
+    fun getUrl(photo : PhotoModel) : Uri {
+        return Uri.parse(ListController.LIST_URL + this.resources.displayMetrics.widthPixels + ListController.LIST_ITEM_PATH + photo.id)
     }
 }

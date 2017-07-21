@@ -11,7 +11,6 @@ import kotlinx.android.synthetic.main.item_list.view.*
 import test.udacity.com.contentanim.R
 import test.udacity.com.contentanim.controllers.ListController
 import test.udacity.com.contentanim.models.PhotoModel
-import test.udacity.com.contentanim.views.interfaces.OnItemClick
 
 
 /**
@@ -20,13 +19,13 @@ import test.udacity.com.contentanim.views.interfaces.OnItemClick
  * Created by bernatgomez on 15/7/17.
  */
 class ListAdapter
-    constructor(val cntxt : Context, val list : List<PhotoModel>, val listener : (PhotoModel) -> Unit) : RecyclerView.Adapter<ListAdapter.ListHolder>() {
+    constructor(val cntxt: Context, val list: List<PhotoModel>, val listener: (PhotoModel) -> Unit) : RecyclerView.Adapter<ListAdapter.ListHolder>() {
 
 
     /**
      *
      */
-    override fun getItemCount(): Int {
+    override fun getItemCount() : Int {
         return this.list.size
     }
 
@@ -34,13 +33,13 @@ class ListAdapter
      *
      */
     override fun onBindViewHolder(holder: ListHolder?, position: Int) {
-        holder?.bind(this.list[position], listener)
+        holder?.bind(this.list[position], this.listener)
     }
 
     /**
      *
      */
-    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ListHolder {
+    override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int) : ListHolder {
         val v =  LayoutInflater.from(this.cntxt).inflate(R.layout.item_list, parent, false)
 
         return ListHolder(v)
@@ -55,9 +54,10 @@ class ListAdapter
          *
          */
         fun bind(photo: PhotoModel, listener : (PhotoModel) -> Unit) {
-            Picasso.with(this.itemView.context).load(this.getUrl(photo)).into(this.itemView.photo)
-            this.itemView.setOnClickListener {
-                listener(photo)
+
+            with (this.itemView) {
+                Picasso.with(this.context).load(getUrl(photo)).into(this.photo)
+                this.setOnClickListener {listener(photo)}
             }
         }
 

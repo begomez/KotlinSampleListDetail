@@ -12,12 +12,12 @@ interface IList {
     /**
      *
      */
-    fun hideLoading();
+    fun hideLoading()
 
     /**
      *
      */
-    fun showLoading();
+    fun showLoading()
 
     /**
      *
