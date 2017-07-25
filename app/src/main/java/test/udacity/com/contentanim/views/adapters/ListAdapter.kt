@@ -11,6 +11,7 @@ import kotlinx.android.synthetic.main.item_list.view.*
 import test.udacity.com.contentanim.R
 import test.udacity.com.contentanim.controllers.ListController
 import test.udacity.com.contentanim.models.PhotoModel
+import test.udacity.com.contentanim.models.PhotoViewModel
 
 
 /**
@@ -19,7 +20,7 @@ import test.udacity.com.contentanim.models.PhotoModel
  * Created by bernatgomez on 15/7/17.
  */
 class ListAdapter
-    constructor(val cntxt: Context, val list: List<PhotoModel>, val listener: (PhotoModel) -> Unit) : RecyclerView.Adapter<ListAdapter.ListHolder>() {
+    constructor(val cntxt: Context, val list: List<PhotoModel>, val listener: (PhotoViewModel) -> Unit) : RecyclerView.Adapter<ListAdapter.ListHolder>() {
 
 
     /**
@@ -53,11 +54,11 @@ class ListAdapter
         /**
          *
          */
-        fun bind(photo: PhotoModel, listener : (PhotoModel) -> Unit) {
+        fun bind(model: PhotoModel, listener : (PhotoViewModel) -> Unit) {
 
             with (this.itemView) {
-                Picasso.with(this.context).load(getUrl(photo)).into(this.photo)
-                this.setOnClickListener {listener(photo)}
+                Picasso.with(this.context).load(getUrl(model)).into(this.photo)
+                this.setOnClickListener {listener(test.udacity.com.contentanim.models.PhotoViewModel(this, model))}
             }
         }
 

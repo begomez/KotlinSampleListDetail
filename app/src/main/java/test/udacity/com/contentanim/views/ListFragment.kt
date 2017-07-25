@@ -1,10 +1,10 @@
 package test.udacity.com.contentanim.views
 
 
-import android.app.ActivityOptions
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.support.v4.app.ActivityOptionsCompat
 import android.support.v4.app.Fragment
 import android.support.v7.widget.GridLayoutManager
 import android.view.LayoutInflater
@@ -16,6 +16,7 @@ import test.udacity.com.contentanim.controllers.ListController
 import test.udacity.com.contentanim.dependencies.AppModule
 import test.udacity.com.contentanim.dependencies.DaggerAppComponent
 import test.udacity.com.contentanim.models.PhotoModel
+import test.udacity.com.contentanim.models.PhotoViewModel
 import test.udacity.com.contentanim.presenters.ListPresenter
 import test.udacity.com.contentanim.views.adapters.ListAdapter
 import test.udacity.com.contentanim.views.interfaces.IList
@@ -121,7 +122,7 @@ class ListFragment constructor() : Fragment(), IList {
 
         //XXX: if lambda is the last argument, we can put it out the parenthesis
         val adapter =
-            ListAdapter(this.context, data) {this.navigate(it)}
+            ListAdapter(this.context, data) {this.navigateWithSharedElem(it)}
 
         adapter.notifyDataSetChanged()
 
@@ -157,14 +158,26 @@ class ListFragment constructor() : Fragment(), IList {
         this.list.setHasFixedSize(true)
     }
 
-    fun navigate(photo : PhotoModel) {
+    fun navigateWithSharedElem(viewModel: PhotoViewModel) {
+        val i = Intent(this.activity, DetailActivity::class.java)
+
+        i.action = Intent.ACTION_VIEW
+        i.data = this.getUrl(viewModel.model)
+        i.putExtra(DetailActivity.EXTRA_PHOTO, viewModel.model)
+
+        val b : Bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity, viewModel.v, viewModel.v.transitionName).toBundle()
+
+        this.activity.startActivity(i, b)
+    }
+
+    fun navigateWithContentAnim(viewModel: PhotoViewModel) {
         val i : Intent = Intent(this.activity, DetailActivity::class.java)
 
         i.action = Intent.ACTION_VIEW
-        i.data = this.getUrl(photo)
-        i.putExtra(DetailActivity.EXTRA_PHOTO, photo)
+        i.data = this.getUrl(viewModel.model)
+        i.putExtra(DetailActivity.EXTRA_PHOTO, viewModel.model)
 
-        val b : Bundle = ActivityOptions.makeSceneTransitionAnimation(this.activity).toBundle()
+        val b : Bundle = ActivityOptionsCompat.makeSceneTransitionAnimation(this.activity).toBundle()
 
         this.activity.startActivity(i, b)
     }

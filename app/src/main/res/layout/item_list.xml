@@ -8,6 +8,8 @@
     android:layout_width="wrap_content"
     android:layout_height="@dimen/photo_h"
 
+    android:transitionName="@string/trans_name"
+
     android:scaleType="centerCrop"
     >
 
